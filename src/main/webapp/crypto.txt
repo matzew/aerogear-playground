@@ -1,0 +1,24 @@
+// Create an Empty DataManager
+var dm = AeroGear.DataManager(),
+     // Create a new Crypto object to use
+     agcrypto = AeroGear.Crypto(),
+          idb;
+ 
+ // Add an IndexedDB store
+ dm.add({
+      name: "idb",
+     type: "IndexedDB",
+     settings: {
+       auto: true, 
+         // New crypto options for DataManager
+         crypto: {
+             agcrypto: agcrypto,
+             options: {
+                 key: "password"
+             }
+         }
+     }
+ });
+ 
+idb = dm.stores.idb;
+idb.save({id:12,creditCard:"45454545454"});

@@ -1,0 +1,20 @@
+var scores = AeroGear.Pipeline([
+    {
+        name: "scores",
+        settings: {
+            endpoint: "rest/scores"
+        }
+    }]).pipes.scores;
+
+var myScore = {team1:"France", team2:"India", result:"0/100"}
+
+scores.save(myScore,
+    {
+        success: function( data, textStatus, jqXHR ) {
+            console.log( "Success" );
+            scores.read();
+        },
+        error: function( jqXHR, textStatus, errorThrown ) {
+            console.log( "Error" );
+        }
+    });

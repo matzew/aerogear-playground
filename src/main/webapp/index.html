@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" ng-app="judconcricket">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AeroGear - Playground</title>
+<script src="js/codemirror.js"></script>
+<link href="css/topcoat-desktop-light.css" rel="stylesheet"
+	media="screen">
+<link href="css/codemirror.css" rel="stylesheet" media="screen">
+<script src="js/matchbrackets.js"></script>
+<script src="js/comment/continuecomment.js"></script>
+<script src="js/comment/comment.js"></script>
+<script src="js/mode/javascript.js"></script>
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/aerogear.js"></script>
+<style type="text/css">
+.CodeMirror {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+</style>
+</head>
+<body>
+	<div class="topcoat-navigation-bar top-header">
+		<div class="topcoat-navigation-bar__item left half">
+			<img src="img/aerogear_logo.png" />
+			<h1>AeroGear Playground</h1>
+		</div>
+	</div>
+	<div>
+		<textarea id="code" name="code">
+
+</textarea>
+	</div>
+
+	<div>
+		<center>
+			<select id="sources">
+				<option value="pipe.txt">Pipes</option>
+				<option value="store.txt">Stores</option>
+				<option value="crypto.txt">Crypto</option>
+			</select>
+			<button class="topcoat-button--large" onclick="runScript()">Run
+				!</button>
+
+		</center>
+	</div>
+
+	<script>    
+    var editor;     
+    var initialLoad = true;    
+    function download_to_textbox(url, el)
+    {
+      $.get(url,  function(data)
+                       {
+                         el.val(data);
+						if(initialLoad) {		
+                         editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                             lineNumbers: true,
+                             matchBrackets: true,
+                             continueComments: "Enter",
+                             extraKeys: {"Ctrl-Q": "toggleComment"}
+                           });     
+							initialLoad = false;
+ 						}     
+						else {
+							editor.setValue(data);
+						}
+                       });
+    }
+
+    download_to_textbox("pipe.txt", $("textarea[name='code']"));
+
+    
+
+      function runScript(){
+    	  var js = editor.getValue();
+    	  var s = document.createElement('script');
+    	  s.textContent = js;//inne
+    	  document.body.appendChild(s);
+      }
+
+      $( "#sources" ).change(function() {
+    	  download_to_textbox($(this).val(), $("textarea[name='code']"));
+    	});
+    </script>
+	</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+//THE STORES
+
+var dm = AeroGear.DataManager([
+  {
+         name: "myDB",
+         type: "WebSQL",
+	     settings: { 
+	       preferred: [ "Memory" ],
+	       auto: true 
+	     }
+     } ]).stores.myDB;
+
+dm.save({id:1,name:"test"});
